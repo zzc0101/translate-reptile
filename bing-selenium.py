@@ -1,5 +1,4 @@
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -43,6 +42,7 @@ def translate_text(text_list, start, end):
         output = WebDriverWait(driver, timeout).until(
             EC.presence_of_element_located((By.ID, 'tta_copyIcon'))
         )
+        print(f'寻找copy按钮 {output}')
         time.sleep(10)
         element = driver.find_element(By.ID, 'tta_copyIcon')
         driver.execute_script("arguments[0].scrollIntoView();", element)
@@ -61,5 +61,5 @@ def translate_text(text_list, start, end):
     driver.quit()
 
 # 调用函数
-translate_text(load_pickle_data(), 100000, 200000)
+translate_text(load_pickle_data(), 1500000, 1600000)
 # print(load_pickle_data()[0])
