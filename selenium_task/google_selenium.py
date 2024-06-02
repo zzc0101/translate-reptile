@@ -2,15 +2,10 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import pickle, time, pyperclip
+import time, pyperclip
 
-# 加载 pickle 数据
-def load_pickle_data():
-    with open('contents.pkl', 'rb') as f:
-        load_data = pickle.load(f)
-    return load_data
-
-def translate_text(text_list):
+# 翻译文本
+def translate_text(text_list, start, end):
     # 初始化Chrome浏览器
     options = webdriver.ChromeOptions()
     # options.add_argument('--headless')  # 如果不需要可视化，可以使用无头模式
@@ -28,8 +23,8 @@ def translate_text(text_list):
     # 刷新一下浏览器
     driver.refresh()
 
-    for i in text_list:
-        text_to_translate = i
+    for i in  range(start, end):
+        text_to_translate = text_list[i]
         # 增加超时时间
         timeout = 10
         # 定位到输入框
@@ -37,8 +32,6 @@ def translate_text(text_list):
             EC.presence_of_element_located((By.XPATH, '//*[@aria-label="原文"]'))  # 修改为更具体的翻译结果元素定位
             # EC.presence_of_element_located((By.CLASS_NAME, 'er8xn'))
         )
-        # 将数据写入剪贴板
-        pyperclip.copy(i)
 
         input.clear()
         print(f"原文：{text_to_translate}")
@@ -58,7 +51,3 @@ def translate_text(text_list):
 
     # 关闭浏览器
     driver.quit()
-
-# 调用函数
-translate_text(load_pickle_data())
-# print(load_pickle_data()[0])
