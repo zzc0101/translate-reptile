@@ -8,10 +8,14 @@ import time, random
 if __name__ == '__main__':
     logging = get_logger()
     
-    data_list = load_pickle_data()
+    data_dp = data_list = pd.read_excel('./translate_sample.xlsx', index_col=None)
 
-    start = 2499999
-    end = 2513000
+    data_list = data_dp.iloc[:, 0].tolist()
+
+    # data_list = load_pickle_data()
+
+    start = 0
+    end = 200
 
     logging.info(f"bing翻译开始启动 - 开始索引:{start} - 结束索引：{end}")
     # print(f"bing翻译开始启动 - 开始索引:{start} - 结束索引：{end}")
@@ -40,7 +44,7 @@ if __name__ == '__main__':
     df = pd.DataFrame(list, columns=["索引", "原文", "翻译"])
     
     # # 保存到Excel文件
-    output_file = "./source_data/bing_three.xlsx"
+    output_file = "./source_data/bing_translate_simple.xlsx"
     df.to_excel(output_file, index=False)
     logging.info("bing翻译结束翻译，并保存文件")
     # print("bing翻译结束翻译，并保存文件")
